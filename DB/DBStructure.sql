@@ -24,10 +24,10 @@ USE `cornettodb`;
 -- Table structure for table `carreras`
 --
 
-CREATE TABLE `carreras` (
+CREATE TABLE `careers` (
   `id` int(11) NOT NULL,
-  `usuarios_id` int(11) NOT NULL,
-  `profesiones_id` int(11) NOT NULL
+  `users_id` int(11) NOT NULL,
+  `professions_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -36,22 +36,22 @@ CREATE TABLE `carreras` (
 -- Table structure for table `cursos`
 --
 
-CREATE TABLE `cursos` (
+CREATE TABLE `courses` (
   `id` int(11) NOT NULL,
-  `semestres_id` int(11) NOT NULL,
-  `reglas_curso_id` int(11) NOT NULL,
-  `materias_id` int(11) DEFAULT NULL,
-  `nombre` varchar(100) NOT NULL,
-  `porcentaje_evaluado` double NOT NULL,
-  `promedio_total` double NOT NULL,
-  `promedio_actual` double NOT NULL,
-  `nota_minima` double NOT NULL,
-  `nota_maxima` double NOT NULL,
-  `estado` varchar(20) NOT NULL,
-  `numero_pendientes` int(11) DEFAULT NULL,
-  `seccion` int(11) DEFAULT NULL,
-  `nota_final_convertida` double NOT NULL,
-  `numero_evaluaciones` int(11) DEFAULT NULL
+  `semesters_id` int(11) NOT NULL,
+  `course_rules_id` int(11) NOT NULL,
+  `subjects_id` int(11) DEFAULT NULL,
+  `name` varchar(100) NOT NULL,
+  `graded_percentage` double NOT NULL,
+  `total_gpa` double NOT NULL,
+  `current_gpa` double NOT NULL,
+  `minimum_grade` double NOT NULL,
+  `maximum_grade` double NOT NULL,
+  `status` varchar(20) NOT NULL,
+  `number_assignments` int(11) DEFAULT NULL,
+  `section` int(11) DEFAULT NULL,
+  `final_converted_grade` double NOT NULL,
+  `number_evaluations` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -60,14 +60,14 @@ CREATE TABLE `cursos` (
 -- Table structure for table `evaluaciones`
 --
 
-CREATE TABLE `evaluaciones` (
+CREATE TABLE `evaluations` (
   `id` int(11) NOT NULL,
-  `cursos_id` int(11) NOT NULL,
-  `reglas_evaluacion_id` int(11) NOT NULL,
-  `porcentaje` double NOT NULL,
-  `nota` double NOT NULL,
-  `evaluado` tinyint(1) NOT NULL,
-  `fecha` date NOT NULL
+  `courses_id` int(11) NOT NULL,
+  `evaluation_rules_id` int(11) NOT NULL,
+  `percentage` double NOT NULL,
+  `grade` double NOT NULL,
+  `graded` tinyint(1) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -76,10 +76,10 @@ CREATE TABLE `evaluaciones` (
 -- Table structure for table `materias`
 --
 
-CREATE TABLE `materias` (
+CREATE TABLE `subjects` (
   `id` int(11) NOT NULL,
-  `codigo` varchar(20) NOT NULL,
-  `creditos` double NOT NULL
+  `code` varchar(20) NOT NULL,
+  `credits` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -88,14 +88,14 @@ CREATE TABLE `materias` (
 -- Table structure for table `pendientes`
 --
 
-CREATE TABLE `pendientes` (
+CREATE TABLE `assignments` (
   `id` int(11) NOT NULL,
-  `cursos_id` int(11) DEFAULT NULL,
-  `pendientes_id` int(11) DEFAULT NULL,
-  `nombre` varchar(200) NOT NULL,
-  `descripcion` longtext,
-  `estado` tinyint(1) NOT NULL,
-  `fecha` date NOT NULL
+  `courses_id` int(11) DEFAULT NULL,
+  `assignments_id` int(11) DEFAULT NULL,
+  `name` varchar(200) NOT NULL,
+  `description` longtext,
+  `status` tinyint(1) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -104,10 +104,10 @@ CREATE TABLE `pendientes` (
 -- Table structure for table `profesiones`
 --
 
-CREATE TABLE `profesiones` (
+CREATE TABLE `professions` (
   `id` int(11) NOT NULL,
-  `universidades_id` int(11) NOT NULL,
-  `nombre` varchar(100) NOT NULL
+  `universities_id` int(11) NOT NULL,
+  `name` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -116,11 +116,11 @@ CREATE TABLE `profesiones` (
 -- Table structure for table `reglas_curso`
 --
 
-CREATE TABLE `reglas_curso` (
+CREATE TABLE `course_rules` (
   `id` int(11) NOT NULL,
-  `nota_base` double NOT NULL,
-  `nota_aprobar` double NOT NULL,
-  `nota_minima_posible` double NOT NULL
+  `grading_base` double NOT NULL,
+  `passing_grade` double NOT NULL,
+  `minimum_possible_grade` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -129,11 +129,11 @@ CREATE TABLE `reglas_curso` (
 -- Table structure for table `reglas_evaluacion`
 --
 
-CREATE TABLE `reglas_evaluacion` (
+CREATE TABLE `evaluation_rules` (
   `id` int(11) NOT NULL,
-  `nota_base` double NOT NULL,
-  `nota_aprobar` double NOT NULL,
-  `nota_minima_posible` double NOT NULL
+  `grading_base` double NOT NULL,
+  `passing_grade` double NOT NULL,
+  `minimum_possible_grade` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -142,12 +142,12 @@ CREATE TABLE `reglas_evaluacion` (
 -- Table structure for table `reglas_semestre`
 --
 
-CREATE TABLE `reglas_semestre` (
+CREATE TABLE `semester_rules` (
   `id` int(11) NOT NULL,
-  `nota_base` double NOT NULL,
-  `nota_aprobar` double NOT NULL,
-  `nota_minima_posible` double NOT NULL,
-  `nota_periodo_prueba` double NOT NULL
+  `grading_base` double NOT NULL,
+  `passing_grade` double NOT NULL,
+  `minimum_possible_grade` double NOT NULL,
+  `probation_period_grade` double NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -156,14 +156,14 @@ CREATE TABLE `reglas_semestre` (
 -- Table structure for table `semestres`
 --
 
-CREATE TABLE `semestres` (
+CREATE TABLE `semesters` (
   `id` int(11) NOT NULL,
-  `carreras_id` int(11) NOT NULL,
-  `reglas_semestre_id` int(11) NOT NULL,
-  `nombre` varchar(50) NOT NULL,
-  `estado` varchar(50) NOT NULL,
-  `promedio_actual` double NOT NULL,
-  `fecha_inicio` date NOT NULL
+  `careers_id` int(11) NOT NULL,
+  `semester_rules_id` int(11) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `status` varchar(50) NOT NULL,
+  `current_gpa` double NOT NULL,
+  `start_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -172,9 +172,9 @@ CREATE TABLE `semestres` (
 -- Table structure for table `universidades`
 --
 
-CREATE TABLE `universidades` (
+CREATE TABLE `universities` (
   `id` int(11) NOT NULL,
-  `nombre` varchar(200) NOT NULL
+  `name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -183,12 +183,12 @@ CREATE TABLE `universidades` (
 -- Table structure for table `usuarios`
 --
 
-CREATE TABLE `usuarios` (
+CREATE TABLE `users` (
   `id` int(11) NOT NULL,
   `email` varchar(50) NOT NULL,
   `password` varchar(50) NOT NULL,
   `alias` varchar(50) NOT NULL,
-  `alertas` tinyint(1) NOT NULL
+  `alerts` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -198,95 +198,95 @@ CREATE TABLE `usuarios` (
 --
 -- Indexes for table `carreras`
 --
-ALTER TABLE `carreras`
+ALTER TABLE `careers`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `usuarios_id` (`usuarios_id`),
-  ADD KEY `profesiones_id` (`profesiones_id`);
+  ADD KEY `users_id` (`users_id`),
+  ADD KEY `professions_id` (`professions_id`);
 
 --
 -- Indexes for table `cursos`
 --
-ALTER TABLE `cursos`
+ALTER TABLE `courses`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `semestres_id` (`semestres_id`),
-  ADD KEY `reglas_curso_id` (`reglas_curso_id`),
-  ADD KEY `materias_id` (`materias_id`),
-  ADD KEY `nombre` (`nombre`);
+  ADD KEY `semesters_id` (`semesters_id`),
+  ADD KEY `course_rules_id` (`course_rules_id`),
+  ADD KEY `subjects_id` (`subjects_id`),
+  ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `evaluaciones`
 --
-ALTER TABLE `evaluaciones`
+ALTER TABLE `evaluations`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `cursos_id` (`cursos_id`),
-  ADD KEY `reglas_evaluacion_id` (`reglas_evaluacion_id`),
-  ADD KEY `fecha` (`fecha`);
+  ADD KEY `courses_id` (`courses_id`),
+  ADD KEY `evaluation_rules_id` (`evaluation_rules_id`),
+  ADD KEY `date` (`date`);
 
 --
 -- Indexes for table `materias`
 --
-ALTER TABLE `materias`
+ALTER TABLE `subjects`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `codigo` (`codigo`);
+  ADD KEY `code` (`code`);
 
 --
 -- Indexes for table `pendientes`
 --
-ALTER TABLE `pendientes`
+ALTER TABLE `assignments`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `cursos_id` (`cursos_id`),
-  ADD KEY `pendientes_id` (`pendientes_id`),
-  ADD KEY `fecha` (`fecha`),
-  ADD KEY `nombre` (`nombre`);
+  ADD KEY `courses_id` (`courses_id`),
+  ADD KEY `assignments_id` (`assignments_id`),
+  ADD KEY `date` (`date`),
+  ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `profesiones`
 --
-ALTER TABLE `profesiones`
+ALTER TABLE `professions`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `universidades_id` (`universidades_id`),
-  ADD KEY `nombre` (`nombre`);
+  ADD KEY `universities_id` (`universities_id`),
+  ADD KEY `name` (`name`);
 
 --
 -- Indexes for table `reglas_curso`
 --
-ALTER TABLE `reglas_curso`
+ALTER TABLE `course_rules`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reglas_evaluacion`
 --
-ALTER TABLE `reglas_evaluacion`
+ALTER TABLE `evaluation_rules`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `reglas_semestre`
 --
-ALTER TABLE `reglas_semestre`
+ALTER TABLE `semester_rules`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `semestres`
 --
-ALTER TABLE `semestres`
+ALTER TABLE `semesters`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `nombre` (`nombre`),
-  ADD KEY `estado` (`estado`),
-  ADD KEY `fecha_inicio` (`fecha_inicio`),
-  ADD KEY `carreras_id` (`carreras_id`),
-  ADD KEY `reglas_semestre_id` (`reglas_semestre_id`);
+  ADD KEY `name` (`name`),
+  ADD KEY `status` (`status`),
+  ADD KEY `start_date` (`start_date`),
+  ADD KEY `careers_id` (`careers_id`),
+  ADD KEY `semester_rules_id` (`semester_rules_id`);
 
 --
 -- Indexes for table `universidades`
 --
-ALTER TABLE `universidades`
+ALTER TABLE `universities`
   ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `nombre` (`nombre`);
+  ADD UNIQUE KEY `name` (`name`);
 
 --
 -- Indexes for table `usuarios`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `email` (`email`);
 
@@ -297,60 +297,60 @@ ALTER TABLE `usuarios`
 --
 -- AUTO_INCREMENT for table `carreras`
 --
-ALTER TABLE `carreras`
+ALTER TABLE `careers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `cursos`
 --
-ALTER TABLE `cursos`
+ALTER TABLE `courses`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `evaluaciones`
 --
-ALTER TABLE `evaluaciones`
+ALTER TABLE `evaluations`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `materias`
 --
-ALTER TABLE `materias`
+ALTER TABLE `subjects`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `pendientes`
 --
-ALTER TABLE `pendientes`
+ALTER TABLE `assignments`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `profesiones`
 --
-ALTER TABLE `profesiones`
+ALTER TABLE `professions`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `reglas_curso`
 --
-ALTER TABLE `reglas_curso`
+ALTER TABLE `course_rules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `reglas_evaluacion`
 --
-ALTER TABLE `reglas_evaluacion`
+ALTER TABLE `evaluation_rules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `reglas_semestre`
 --
-ALTER TABLE `reglas_semestre`
+ALTER TABLE `semester_rules`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `semestres`
 --
-ALTER TABLE `semestres`
+ALTER TABLE `semesters`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `universidades`
 --
-ALTER TABLE `universidades`
+ALTER TABLE `universities`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `usuarios`
 --
-ALTER TABLE `usuarios`
+ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
